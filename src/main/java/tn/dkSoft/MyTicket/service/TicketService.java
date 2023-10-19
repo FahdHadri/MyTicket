@@ -29,14 +29,15 @@ public class TicketService implements TicketServiceInterface {
         log.info("Saving new Ticket");
         Tickets tickets = EventMapperImpl.fromTicketDto(ticketsDto);
         if (ticketsDto.getEventId() != null) {
-            Event event = eventRepository.findById(ticketsDto.getEventId())
-                    .orElseThrow(() -> new NotFoundException ("Event not found"));
+            Event event =
+                    eventRepository
+                            .findById(ticketsDto.getEventId())
+                            .orElseThrow(() -> new NotFoundException("Event not found"));
             tickets.setEvent(event);
         }
         Tickets savedTickets = ticketRepository.save(tickets);
         return EventMapperImpl.fromTicket(savedTickets);
     }
-
 
     @Override
     public List<TicketsDto> listTickets() {
@@ -53,9 +54,10 @@ public class TicketService implements TicketServiceInterface {
 
     @Override
     public TicketsDto getTickets(Long id) throws NotFoundException {
-        Tickets tickets = ticketRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException("Tickets Not found"));
+        Tickets tickets =
+                ticketRepository
+                        .findById(id)
+                        .orElseThrow(() -> new NotFoundException("Tickets Not found"));
         TicketsDto ticketsDto = EventMapperImpl.fromTicket(tickets);
         if (tickets.getEvent() != null) {
             EventDto eventDto = EventMapperImpl.fromEvent(tickets.getEvent());
@@ -64,13 +66,14 @@ public class TicketService implements TicketServiceInterface {
         return ticketsDto;
     }
 
-
     @Override
     public TicketsDto updateTickets(TicketsDto ticketsDto) throws NotFoundException {
         log.info("Updating Tickets");
-        Tickets ticket = ticketRepository.findById(ticketsDto.getId())
-                .orElseThrow(() -> new NotFoundException("Ticket Not found"));
-        ticket.setCode_ticket (ticketsDto.getCodeTicket());
+        Tickets ticket =
+                ticketRepository
+                        .findById(ticketsDto.getId())
+                        .orElseThrow(() -> new NotFoundException("Ticket Not found"));
+        ticket.setCode_ticket(ticketsDto.getCodeTicket());
         ticket.setTicketCat(ticketsDto.getTicketCat());
         ticket.setPrice(ticketsDto.getPrice());
         ticket.setQuantity(ticketsDto.getQuantity());
@@ -78,7 +81,6 @@ public class TicketService implements TicketServiceInterface {
         Tickets updatedTicket = ticketRepository.save(ticket);
         return EventMapperImpl.fromTicket(updatedTicket);
     }
-
 
     @Override
     public void deleteTickets(Long id) {

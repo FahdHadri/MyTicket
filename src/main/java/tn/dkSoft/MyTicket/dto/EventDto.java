@@ -1,6 +1,5 @@
 package tn.dkSoft.MyTicket.dto;
 
-
 import java.util.Date;
 import lombok.*;
 import tn.dkSoft.MyTicket.enums.EventCategory;
@@ -13,5 +12,4 @@ public class EventDto {
     private EventCategory cat;
     private boolean available;
     private Long sessionId;
-
 }

@@ -35,9 +35,10 @@ public class SessionService implements SessionServiceInterface {
 
             Long venueId = sessionDto.getVenueDto().getVenueId();
 
-            Venue venue = venueRepository
-                    .findById(venueId)
-                    .orElseThrow(() -> new NotFoundException("Venue not found"));
+            Venue venue =
+                    venueRepository
+                            .findById(venueId)
+                            .orElseThrow(() -> new NotFoundException("Venue not found"));
             session.setVenue(venue);
         }
 
@@ -45,7 +46,6 @@ public class SessionService implements SessionServiceInterface {
 
         return EventMapperImpl.fromSession(savedSession);
     }
-
 
     @Override
     public List<SessionDto> listSessions() {
@@ -73,25 +73,24 @@ public class SessionService implements SessionServiceInterface {
 
     @Override
     public SessionDto getSession(Long id) throws NotFoundException {
-        Session session = sessionRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Session Not found"));
+        Session session =
+                sessionRepository
+                        .findById(id)
+                        .orElseThrow(() -> new NotFoundException("Session Not found"));
         SessionDto sessionDto = EventMapperImpl.fromSession(session);
         if (session.getVenue() != null) {
             VenueDto venueDto = EventMapperImpl.fromVenue(session.getVenue());
             sessionDto.setVenueDto(venueDto);
         }
         if (session.getEvents() != null) {
-            List<EventDto> eventDtos = session.getEvents().stream()
-                    .map(EventMapperImpl::fromEvent)
-                    .collect(Collectors.toList());
+            List<EventDto> eventDtos =
+                    session.getEvents().stream()
+                            .map(EventMapperImpl::fromEvent)
+                            .collect(Collectors.toList());
             sessionDto.setEventDtos(eventDtos);
         }
         return sessionDto;
     }
-
-
-
-
 
     @Override
     public SessionDto updateSession(SessionDto sessionDto) {

@@ -29,8 +29,10 @@ public class EventService implements EventServiceInterface {
         log.info("Saving new Event");
         Event event = EventMapperImpl.fromEventDto(eventDto);
         if (eventDto.getSessionId() != null) {
-            Session session = sessionRepository.findById(eventDto.getSessionId())
-                    .orElseThrow(() -> new NotFoundException("Session not found"));
+            Session session =
+                    sessionRepository
+                            .findById(eventDto.getSessionId())
+                            .orElseThrow(() -> new NotFoundException("Session not found"));
             event.setSession(session);
             session.getEvents().add(event);
             event = eventRepository.save(event);
@@ -40,10 +42,9 @@ public class EventService implements EventServiceInterface {
         }
 
         // Convert the updated Event back to EventDto
-        EventDto newEventDto = EventMapperImpl.fromEvent (event);
+        EventDto newEventDto = EventMapperImpl.fromEvent(event);
         return newEventDto;
     }
-
 
     @Override
     public List<EventDto> listEvent() {
@@ -60,8 +61,10 @@ public class EventService implements EventServiceInterface {
 
     @Override
     public EventDto getEvent(Long id) throws NotFoundException {
-        Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Event Not found"));
+        Event event =
+                eventRepository
+                        .findById(id)
+                        .orElseThrow(() -> new NotFoundException("Event Not found"));
         EventDto eventDto = EventMapperImpl.fromEvent(event);
         if (event.getSession() != null) {
             Long sessionId = event.getSession().getSessionId();
@@ -71,8 +74,6 @@ public class EventService implements EventServiceInterface {
         }
         return eventDto;
     }
-
-
 
     /**
      * public EventDto updateEvent(EventDto eventDto) {
@@ -90,7 +91,7 @@ public class EventService implements EventServiceInterface {
                         .findById(eventId)
                         .orElseThrow(
                                 () ->
-                                        new NotFoundException (
+                                        new NotFoundException(
                                                 "Event with ID " + eventId + " not found"));
 
         Event updatedEvent = EventMapperImpl.fromEventDto(eventDto);
@@ -99,7 +100,7 @@ public class EventService implements EventServiceInterface {
             Session session =
                     sessionRepository
                             .findById(eventDto.getSessionId())
-                            .orElseThrow(() -> new NotFoundException ("Session not found"));
+                            .orElseThrow(() -> new NotFoundException("Session not found"));
             updatedEvent.setSession(session);
         }
         updatedEvent.setEventId(event.getEventId());

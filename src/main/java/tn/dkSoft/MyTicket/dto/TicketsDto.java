@@ -1,6 +1,5 @@
 package tn.dkSoft.MyTicket.dto;
 
-import java.io.Serializable;
 import lombok.*;
 import tn.dkSoft.MyTicket.enums.TicketCategory;
 
