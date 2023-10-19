@@ -1,21 +1,19 @@
 package tn.dkSoft.MyTicket.service;
 
+import java.util.List;
 import tn.dkSoft.MyTicket.dto.TicketsDto;
 import tn.dkSoft.MyTicket.exceptions.EventNotFoundException;
 
-import java.util.List;
-
 public interface TicketServiceInterface {
-  TicketsDto saveTickets(TicketsDto ticketsDto);
+    TicketsDto saveTickets(TicketsDto ticketsDto);
 
-        List<TicketsDto> listTickets();
+    List<TicketsDto> listTickets();
 
-        List<TicketsDto> searchTicket(String keyword);
+    List<TicketsDto> searchTicket(String keyword);
 
-        TicketsDto getTickets(Long id) throws EventNotFoundException;
+    TicketsDto getTickets(Long id) throws EventNotFoundException;
 
-        TicketsDto updateTickets(TicketsDto ticketsDto);
+    TicketsDto updateTickets(TicketsDto ticketsDto);
 
-        void deleteTickets(Long id);
-    }
-
+    void deleteTickets(Long id);
+}

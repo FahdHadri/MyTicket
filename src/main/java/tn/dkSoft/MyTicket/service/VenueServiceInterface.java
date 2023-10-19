@@ -1,18 +1,17 @@
 package tn.dkSoft.MyTicket.service;
 
+import java.util.List;
 import tn.dkSoft.MyTicket.dto.VenueDto;
 import tn.dkSoft.MyTicket.exceptions.VenueNotFoundException;
 
-import java.util.List;
-
 public interface VenueServiceInterface {
- VenueDto saveVenue(VenueDto venueDto);
+    VenueDto saveVenue(VenueDto venueDto);
 
-        List<VenueDto> listVenue();
+    List<VenueDto> listVenue();
 
-        VenueDto getVenue(Long id) throws VenueNotFoundException;
+    VenueDto getVenue(Long id) throws VenueNotFoundException;
 
-        VenueDto updateVenue(VenueDto venueDto);
+    VenueDto updateVenue(VenueDto venueDto);
 
-        void deleteVenue(Long id);
-    }
+    void deleteVenue(Long id);
+}

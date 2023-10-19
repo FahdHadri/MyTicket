@@ -1,7 +1,6 @@
 package tn.dkSoft.MyTicket.exceptions;
 
 import ch.qos.logback.core.spi.ErrorCodes;
-
 import java.util.List;
 
 public class InvalidEntityException extends RuntimeException {
@@ -22,7 +21,8 @@ public class InvalidEntityException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
-    public InvalidEntityException(String message, Throwable cause, ErrorCodes errorCode, List<String> errors) {
+    public InvalidEntityException(
+            String message, Throwable cause, ErrorCodes errorCode, List<String> errors) {
         super(message, cause);
         this.errorCode = errorCode;
         this.errors = errors;
@@ -43,5 +43,7 @@ public class InvalidEntityException extends RuntimeException {
         return errorCode;
     }
 
-    public List<String> getErrors() { return errors; }
+    public List<String> getErrors() {
+        return errors;
+    }
 }

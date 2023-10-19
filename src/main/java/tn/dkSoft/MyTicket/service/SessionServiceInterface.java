@@ -1,20 +1,19 @@
 package tn.dkSoft.MyTicket.service;
 
+import java.util.List;
 import tn.dkSoft.MyTicket.dto.SessionDto;
 import tn.dkSoft.MyTicket.exceptions.SessionNotFoundException;
 
-import java.util.List;
-
 public interface SessionServiceInterface {
- SessionDto saveSession(SessionDto sessionDto);
+    SessionDto saveSession(SessionDto sessionDto);
 
-        List<SessionDto> listSessions();
+    List<SessionDto> listSessions();
 
-        List<SessionDto> searchSession(String keyword);
+    List<SessionDto> searchSession(String keyword);
 
-        SessionDto getSession(Long id) throws SessionNotFoundException;
+    SessionDto getSession(Long id) throws SessionNotFoundException;
 
-        SessionDto updateSession(SessionDto sessionDto);
+    SessionDto updateSession(SessionDto sessionDto);
 
-        void deleteSession(Long id);
-    }
+    void deleteSession(Long id);
+}

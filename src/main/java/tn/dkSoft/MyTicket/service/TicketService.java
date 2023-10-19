@@ -1,7 +1,9 @@
 package tn.dkSoft.MyTicket.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tn.dkSoft.MyTicket.dto.EventDto;
@@ -12,75 +14,63 @@ import tn.dkSoft.MyTicket.model.Event;
 import tn.dkSoft.MyTicket.model.Tickets;
 import tn.dkSoft.MyTicket.repository.TicketRepository;
 
-import java.util.List;
-import java.util.stream.Collectors;
 @Service
 @Slf4j
+@RequiredArgsConstructor
 @Transactional
 public class TicketService implements TicketServiceInterface {
+
     private final TicketRepository ticketRepository;
-    private EventMapperImpl dtoMapper;
-    @Autowired
-    public TicketService(TicketRepository ticketRepository, EventMapperImpl dtoMapper) {
-        this.ticketRepository = ticketRepository;
-        this.dtoMapper = dtoMapper;
-    }
 
     @Override
     public TicketsDto saveTickets(TicketsDto ticketsDto) {
         log.info("Saving new Tickets");
-        Tickets tickets=dtoMapper.fromTicketDto (ticketsDto);
-        if (ticketsDto.getEventId () != null) {
-            Event event = dtoMapper.fromEventDto (ticketsDto.getEventId ());
-            tickets.setEvent (event);
+        Tickets tickets = EventMapperImpl.fromTicketDto(ticketsDto);
+        if (ticketsDto.getEventId() != null) {
+            Event event = EventMapperImpl.fromEventDto(ticketsDto.getEventId());
+            tickets.setEvent(event);
         }
         Tickets savedTickets = ticketRepository.save(tickets);
-        return dtoMapper.fromTicket (savedTickets);
+        return EventMapperImpl.fromTicket(savedTickets);
     }
-
 
     @Override
     public List<TicketsDto> listTickets() {
         List<Tickets> tickets = ticketRepository.findAll();
-        List<TicketsDto> ticketsDtos = tickets.stream()
-                .map(ticket-> dtoMapper.fromTicket (ticket))
-                .collect( Collectors.toList());
 
-        return ticketsDtos;
+        return tickets.stream().map(EventMapperImpl::fromTicket).collect(Collectors.toList());
     }
 
     @Override
     public List<TicketsDto> searchTicket(String keyword) {
-        List<Tickets> tickets=ticketRepository.searchTickets (keyword);
-        List<TicketsDto> ticketsDtoList = tickets.stream().map(tick -> dtoMapper.fromTicket (tick)).collect(Collectors.toList());
-        return ticketsDtoList;
+        List<Tickets> tickets = ticketRepository.searchTickets(keyword);
+        return tickets.stream().map(EventMapperImpl::fromTicket).collect(Collectors.toList());
     }
 
     @Override
     public TicketsDto getTickets(Long id) throws EventNotFoundException {
-        Tickets tickets = ticketRepository.findById(id)
-                .orElseThrow(() -> new EventNotFoundException ("Tickets Not found"));
-        TicketsDto ticketsDto = dtoMapper.fromTicket (tickets);
-        if (ticketsDto.getEventId () != null) {
-            EventDto eventDto = dtoMapper.fromEvent (tickets.getEvent ());
-            ticketsDto.setEventId (eventDto);
+        Tickets tickets =
+                ticketRepository
+                        .findById(id)
+                        .orElseThrow(() -> new EventNotFoundException("Tickets Not found"));
+        TicketsDto ticketsDto = EventMapperImpl.fromTicket(tickets);
+        if (ticketsDto.getEventId() != null) {
+            EventDto eventDto = EventMapperImpl.fromEvent(tickets.getEvent());
+            ticketsDto.setEventId(eventDto);
         }
-        return dtoMapper.fromTicket (tickets);
+        return EventMapperImpl.fromTicket(tickets);
     }
 
     @Override
     public TicketsDto updateTickets(TicketsDto ticketsDto) {
         log.info("Saving new Tickets");
-        Tickets tickets=dtoMapper.fromTicketDto (ticketsDto);
+        Tickets tickets = EventMapperImpl.fromTicketDto(ticketsDto);
         Tickets savedTickets = ticketRepository.save(tickets);
-        return dtoMapper.fromTicket (savedTickets);
+        return EventMapperImpl.fromTicket(savedTickets);
     }
 
     @Override
-    public void deleteTickets(Long id){
+    public void deleteTickets(Long id) {
         ticketRepository.deleteById(id);
     }
 }
-
-
-

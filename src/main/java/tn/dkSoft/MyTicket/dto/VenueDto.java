@@ -1,8 +1,7 @@
 package tn.dkSoft.MyTicket.dto;
 
-import lombok.*;
-
 import java.io.Serializable;
+import lombok.*;
 
 @Data
 public class VenueDto implements Serializable {
@@ -10,7 +9,4 @@ public class VenueDto implements Serializable {
     private String venueName;
     private long capacity;
     private boolean status;
-
-
-
 }
