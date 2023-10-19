@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import tn.dkSoft.MyTicket.dto.SessionDto;
-import tn.dkSoft.MyTicket.exceptions.SessionNotFoundException;
-import tn.dkSoft.MyTicket.service.SessionService;
+import tn.dkSoft.MyTicket.exceptions.NotFoundException;
+import tn.dkSoft.MyTicket.service.SessionServiceInterface;
 
 @RestController
 @RequestMapping("/session")
@@ -15,7 +15,7 @@ import tn.dkSoft.MyTicket.service.SessionService;
 @Lazy
 @Service
 public class SessionController {
-    private final SessionService sessionService;
+    private final SessionServiceInterface sessionService;
 
     @PostMapping("/save")
     public SessionDto saveSession(@RequestBody SessionDto sessionDto) {
@@ -35,7 +35,7 @@ public class SessionController {
 
     @GetMapping("/{id}")
     public SessionDto getSession(@PathVariable(name = "id") Long id)
-            throws SessionNotFoundException {
+            throws NotFoundException {
         return sessionService.getSession(id);
     }
 

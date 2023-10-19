@@ -1,7 +1,7 @@
 package tn.dkSoft.MyTicket.service;
 
 import tn.dkSoft.MyTicket.dto.EventDto;
-import tn.dkSoft.MyTicket.exceptions.EventNotFoundException;
+import tn.dkSoft.MyTicket.exceptions.NotFoundException;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface EventServiceInterface {
 
     List<EventDto> searchEvent(String keyword);
 
-    EventDto getEvent(Long id) throws EventNotFoundException;
+    EventDto getEvent(Long id) throws NotFoundException;
 
     EventDto updateEvent(Long eventId, EventDto eventDto);
 

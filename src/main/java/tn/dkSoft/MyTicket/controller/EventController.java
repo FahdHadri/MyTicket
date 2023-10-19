@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import tn.dkSoft.MyTicket.dto.EventDto;
-import tn.dkSoft.MyTicket.exceptions.EventNotFoundException;
-import tn.dkSoft.MyTicket.service.EventService;
+import tn.dkSoft.MyTicket.exceptions.NotFoundException;
+import tn.dkSoft.MyTicket.service.EventServiceInterface;
 
 @RestController
 @RequestMapping("/event")
@@ -16,7 +16,7 @@ import tn.dkSoft.MyTicket.service.EventService;
 @RequiredArgsConstructor
 @Service
 public class EventController {
-    private final EventService eventService;
+    private final EventServiceInterface eventService;
 
     @PostMapping("/save")
     public EventDto saveEvent(@RequestBody EventDto eventDto) {
@@ -35,7 +35,7 @@ public class EventController {
     }
 
     @GetMapping("/{id}")
-    public EventDto getEvent(@PathVariable(name = "id") Long id) throws EventNotFoundException {
+    public EventDto getEvent(@PathVariable(name = "id") Long id) throws NotFoundException {
         return eventService.getEvent(id);
     }
 

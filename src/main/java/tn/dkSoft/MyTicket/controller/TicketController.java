@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import tn.dkSoft.MyTicket.dto.TicketsDto;
-import tn.dkSoft.MyTicket.exceptions.EventNotFoundException;
-import tn.dkSoft.MyTicket.service.TicketService;
+import tn.dkSoft.MyTicket.exceptions.NotFoundException;
+import tn.dkSoft.MyTicket.service.TicketServiceInterface;
 
 @RestController
 @RequestMapping("/ticket")
@@ -15,7 +15,7 @@ import tn.dkSoft.MyTicket.service.TicketService;
 @Lazy
 @Service
 public class TicketController {
-    private final TicketService ticketsService;
+    private final TicketServiceInterface ticketsService;
 
     @PostMapping("/save")
     public TicketsDto saveTicket(@RequestBody TicketsDto ticketsDto) {
@@ -34,7 +34,7 @@ public class TicketController {
     }
 
     @GetMapping("/{id}")
-    public TicketsDto getTicket(@PathVariable(name = "id") Long id) throws EventNotFoundException {
+    public TicketsDto getTicket(@PathVariable(name = "id") Long id) throws NotFoundException {
         return ticketsService.getTickets(id);
     }
 

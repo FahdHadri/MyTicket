@@ -12,6 +12,7 @@ public class SessionDto implements Serializable {
     private Date startDate;
     private Date finishDate;
     private String imgUrl;
-    private Long venueId;
-    private List<EventDto> eventDtoList;
+    private VenueDto venueDto;
+    private List<EventDto>eventDtos;
+
 }

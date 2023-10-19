@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import tn.dkSoft.MyTicket.dto.VenueDto;
-import tn.dkSoft.MyTicket.exceptions.VenueNotFoundException;
-import tn.dkSoft.MyTicket.service.VenueService;
+import tn.dkSoft.MyTicket.exceptions.NotFoundException;
+import tn.dkSoft.MyTicket.service.VenueServiceInterface;
 
 @RestController
 @RequestMapping("/venue")
@@ -15,7 +15,7 @@ import tn.dkSoft.MyTicket.service.VenueService;
 @Lazy
 @Service
 public class VenueController {
-    private final VenueService venueService;
+    private final VenueServiceInterface venueService;
 
     @PostMapping("/save")
     public VenueDto saveVenue(@RequestBody VenueDto venueDto) {
@@ -28,7 +28,7 @@ public class VenueController {
     }
 
     @GetMapping("/{id}")
-    public VenueDto getVenue(@PathVariable(name = "id") Long id) throws VenueNotFoundException {
+    public VenueDto getVenue(@PathVariable(name = "id") Long id) throws NotFoundException {
         return venueService.getVenue(id);
     }
 

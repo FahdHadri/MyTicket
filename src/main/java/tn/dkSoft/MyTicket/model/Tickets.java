@@ -10,7 +10,7 @@ import tn.dkSoft.MyTicket.enums.TicketCategory;
 @AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
+
 @Table(name = "tickets")
 public class Tickets {
 

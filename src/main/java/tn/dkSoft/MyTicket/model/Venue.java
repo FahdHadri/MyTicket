@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
 @Table(name = "venue")
 public class Venue {
 

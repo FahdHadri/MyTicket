@@ -4,9 +4,8 @@ import java.io.Serializable;
 import lombok.*;
 
 @Data
-public class VenueDto implements Serializable {
+public class VenueDto {
     private Long venueId;
     private String venueName;
     private long capacity;
-    private boolean status;
 }

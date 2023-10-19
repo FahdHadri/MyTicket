@@ -8,9 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tn.dkSoft.MyTicket.dto.EventDto;
-import tn.dkSoft.MyTicket.dto.SessionDto;
-import tn.dkSoft.MyTicket.exceptions.EventNotFoundException;
-import tn.dkSoft.MyTicket.exceptions.SessionNotFoundException;
+import tn.dkSoft.MyTicket.exceptions.NotFoundException;
 import tn.dkSoft.MyTicket.mappers.EventMapperImpl;
 import tn.dkSoft.MyTicket.model.Event;
 import tn.dkSoft.MyTicket.model.Session;
@@ -29,26 +27,23 @@ public class EventService implements EventServiceInterface {
     @Transactional
     public EventDto saveEvent(EventDto eventDto) {
         log.info("Saving new Event");
-
-        // Convert EventDto to Event
         Event event = EventMapperImpl.fromEventDto(eventDto);
-
         if (eventDto.getSessionId() != null) {
-            // Retrieve the Session entity based on the provided sessionId
-            Session session =
-                    sessionRepository
-                            .findById(eventDto.getSessionId())
-                            .orElseThrow(() -> new SessionNotFoundException("Session not found"));
-
-            // Associate the Event with the retrieved Session
+            Session session = sessionRepository.findById(eventDto.getSessionId())
+                    .orElseThrow(() -> new NotFoundException("Session not found"));
             event.setSession(session);
+            session.getEvents().add(event);
+            event = eventRepository.save(event);
+        } else {
+            event.setSession(null);
+            event = eventRepository.save(event);
         }
 
-        // Save the Event entity
-        Event savedEvent = eventRepository.save(event);
-
-        return EventMapperImpl.fromEvent(savedEvent);
+        // Convert the updated Event back to EventDto
+        EventDto newEventDto = EventMapperImpl.fromEvent (event);
+        return newEventDto;
     }
+
 
     @Override
     public List<EventDto> listEvent() {
@@ -64,18 +59,20 @@ public class EventService implements EventServiceInterface {
     }
 
     @Override
-    public EventDto getEvent(Long id) throws EventNotFoundException {
-        Event event =
-                eventRepository
-                        .findById(id)
-                        .orElseThrow(() -> new EventNotFoundException("Event Not found"));
+    public EventDto getEvent(Long id) throws NotFoundException {
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Event Not found"));
         EventDto eventDto = EventMapperImpl.fromEvent(event);
-        if (eventDto.getSessionId() != null) {
-            SessionDto sessionDto = EventMapperImpl.fromSession(event.getSession());
-            eventDto.getSessionId();
+        if (event.getSession() != null) {
+            Long sessionId = event.getSession().getSessionId();
+            eventDto.setSessionId(sessionId);
+        } else {
+            eventDto.setSessionId(null);
         }
-        return EventMapperImpl.fromEvent(event);
+        return eventDto;
     }
+
+
 
     /**
      * public EventDto updateEvent(EventDto eventDto) {
@@ -93,7 +90,7 @@ public class EventService implements EventServiceInterface {
                         .findById(eventId)
                         .orElseThrow(
                                 () ->
-                                        new EventNotFoundException(
+                                        new NotFoundException (
                                                 "Event with ID " + eventId + " not found"));
 
         Event updatedEvent = EventMapperImpl.fromEventDto(eventDto);
@@ -102,7 +99,7 @@ public class EventService implements EventServiceInterface {
             Session session =
                     sessionRepository
                             .findById(eventDto.getSessionId())
-                            .orElseThrow(() -> new SessionNotFoundException("Session not found"));
+                            .orElseThrow(() -> new NotFoundException ("Session not found"));
             updatedEvent.setSession(session);
         }
         updatedEvent.setEventId(event.getEventId());

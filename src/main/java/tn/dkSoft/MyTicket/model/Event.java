@@ -13,7 +13,6 @@ import tn.dkSoft.MyTicket.enums.EventCategory;
 @AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
 @Lazy
 @Table(name = "event")
 public class Event {

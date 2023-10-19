@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tn.dkSoft.MyTicket.dto.VenueDto;
-import tn.dkSoft.MyTicket.exceptions.VenueNotFoundException;
+import tn.dkSoft.MyTicket.exceptions.NotFoundException;
 import tn.dkSoft.MyTicket.mappers.EventMapperImpl;
 import tn.dkSoft.MyTicket.model.Venue;
 import tn.dkSoft.MyTicket.repository.VenueRepository;
@@ -35,11 +35,11 @@ public class VenueService implements VenueServiceInterface {
     }
 
     @Override
-    public VenueDto getVenue(Long id) throws VenueNotFoundException {
+    public VenueDto getVenue(Long id) throws NotFoundException {
         Venue venue =
                 venueRepository
                         .findById(id)
-                        .orElseThrow(() -> new VenueNotFoundException("Venue Not found"));
+                        .orElseThrow(() -> new NotFoundException("Venue Not found"));
         return EventMapperImpl.fromVenue(venue);
     }
 

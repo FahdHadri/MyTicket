@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Lazy;
 @AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
 @Lazy
 @Table(name = "session")
 public class Session {
