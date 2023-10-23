@@ -40,4 +40,6 @@ public class Session {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "session")
     private List<Event> events;
+
+
 }

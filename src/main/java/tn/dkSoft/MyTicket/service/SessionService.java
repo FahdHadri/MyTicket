@@ -20,7 +20,7 @@ import tn.dkSoft.MyTicket.repository.VenueRepository;
 @Slf4j
 @Transactional
 @RequiredArgsConstructor
-public class SessionService implements SessionServiceInterface {
+public class SessionService implements SessionServiceInterface{
 
     private final SessionRepository sessionRepository;
     private final VenueRepository venueRepository;
@@ -91,14 +91,35 @@ public class SessionService implements SessionServiceInterface {
         }
         return sessionDto;
     }
-
-    @Override
+@Override
     public SessionDto updateSession(SessionDto sessionDto) {
-        log.info("Saving new Session");
+        log.info("Updating Session");
         Session session = EventMapperImpl.fromSessionDTO(sessionDto);
         Session savedSession = sessionRepository.save(session);
         return EventMapperImpl.fromSession(savedSession);
     }
+
+
+  /* @Override
+   @Transactional
+   public SessionDto updateSession(SessionDto sessionDto) throws NotFoundException {
+       log.info("Updating Session");
+       Long sessionId = sessionDto.getSessionId();
+       Session exist = sessionRepository.findById(sessionId)
+               .orElseThrow(() -> new NotFoundException("Session Not found"));
+       Session updatedSession = EventMapperImpl.fromSessionDTO(sessionDto);
+       if (sessionDto.getVenueDto() != null) {
+           Long venueId = sessionDto.getVenueDto().getVenueId();
+           Venue venue = venueRepository.findById(venueId)
+                   .orElseThrow(() -> new NotFoundException("Venue not found"));
+           updatedSession.setVenue(venue);
+       } else {
+           updatedSession.setVenue(null);
+       }
+       Session savedSession = sessionRepository.save(updatedSession);
+       return EventMapperImpl.fromSession(savedSession);
+   }*/
+
 
     @Override
     public void deleteSession(Long id) {

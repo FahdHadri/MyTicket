@@ -34,7 +34,8 @@ public class SessionController {
     }
 
     @GetMapping("/{id}")
-    public SessionDto getSession(@PathVariable(name = "id") Long id) throws NotFoundException {
+    public SessionDto getSession(@PathVariable(name = "id") Long id)
+            throws NotFoundException {
         return sessionService.getSession(id);
     }
 

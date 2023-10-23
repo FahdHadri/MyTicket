@@ -2,6 +2,7 @@ package tn.dkSoft.MyTicket.service;
 
 import java.util.List;
 import tn.dkSoft.MyTicket.dto.SessionDto;
+import tn.dkSoft.MyTicket.dto.VenueDto;
 import tn.dkSoft.MyTicket.exceptions.NotFoundException;
 
 public interface SessionServiceInterface {
