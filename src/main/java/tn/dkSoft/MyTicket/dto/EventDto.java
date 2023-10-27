@@ -5,11 +5,14 @@ import lombok.*;
 import tn.dkSoft.MyTicket.enums.EventCategory;
 
 @Data
+@Setter
+@Getter
+@RequiredArgsConstructor
 public class EventDto {
     private Long eventId;
     private String description;
     private Date dateEvent;
     private EventCategory cat;
     private boolean available;
-    private Long sessionId;
+    private SessionDto sessionDto;
 }

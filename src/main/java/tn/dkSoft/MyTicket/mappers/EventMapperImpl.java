@@ -2,14 +2,8 @@ package tn.dkSoft.MyTicket.mappers;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import tn.dkSoft.MyTicket.dto.EventDto;
-import tn.dkSoft.MyTicket.dto.SessionDto;
-import tn.dkSoft.MyTicket.dto.TicketsDto;
-import tn.dkSoft.MyTicket.dto.VenueDto;
-import tn.dkSoft.MyTicket.model.Event;
-import tn.dkSoft.MyTicket.model.Session;
-import tn.dkSoft.MyTicket.model.Tickets;
-import tn.dkSoft.MyTicket.model.Venue;
+import tn.dkSoft.MyTicket.dto.*;
+import tn.dkSoft.MyTicket.model.*;
 
 @Service
 public class EventMapperImpl {
@@ -69,4 +63,44 @@ public class EventMapperImpl {
 
         return ticketsDto;
     }
+
+    public static Cart fromCartDto(CartDto cartDto) {
+        Cart cart = new Cart();
+        BeanUtils.copyProperties(cartDto, cart);
+        return cart;
+    }
+
+    public static CartDto fromCart(Cart cart) {
+        CartDto cartDto = new CartDto ();
+        BeanUtils.copyProperties(cart, cartDto);
+        return cartDto;
+    }
+
+    public static CartItem fromCartItemDto(CartItemDto cartItemDto) {
+        CartItem cartItem = new CartItem();
+        BeanUtils.copyProperties(cartItemDto, cartItem);
+        return cartItem;
+    }
+
+    public static CartItemDto fromCartItem(CartItem cartItem) {
+        CartItemDto cartItemDto = new CartItemDto ();
+        BeanUtils.copyProperties(cartItem, cartItemDto);
+        return cartItemDto;
+    }
+
+    public static User fromUserDto(UserDto userDto) {
+        User user = new User ();
+        BeanUtils.copyProperties(userDto, user);
+        return user;
+    }
+
+    public static UserDto fromUser(User user) {
+        UserDto userDto = new UserDto ();
+        BeanUtils.copyProperties(user, userDto);
+        return userDto;
+    }
+
+
+
+
 }
